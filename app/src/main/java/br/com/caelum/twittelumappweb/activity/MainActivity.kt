@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import br.com.caelum.twittelumappweb.R
+import br.com.caelum.twittelumappweb.fragment.BuscaFragment
 import br.com.caelum.twittelumappweb.fragment.ListaFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_item_lista -> {
                     exibeNaTela(ListaFragment())
+                    true
+                }
+                R.id.menu_item_busca -> {
+                    exibeNaTela(BuscaFragment())
                     true
                 }
                 else -> false
