@@ -1,17 +1,35 @@
 package br.com.caelum.twittelumappweb.data
 
+import android.arch.lifecycle.MutableLiveData
 import br.com.caelum.twittelumappweb.modelo.Tweet
+import br.com.caelum.twittelumappweb.webservices.TweetWebClient
 
-class TweetRepository {
+class TweetRepository(private val client: TweetWebClient) {
 
-    fun salva(tweet: Tweet) {}
+    val lista: MutableLiveData<List<Tweet>> = MutableLiveData()
 
-    fun lista() = listOf(
-            Tweet("tweet 1", null),
-            Tweet("tweet 2", null),
-            Tweet("tweet 3", null),
-            Tweet("tweet 4", null),
-            Tweet("tweet 5", null)
-    )
+    val excecao: MutableLiveData<Throwable> = MutableLiveData()
+
+    val tweetLiveData: MutableLiveData<Tweet> = MutableLiveData()
+
+    fun salva(tweet: Tweet) = client.salva(tweet, sucesso(), erro())
+
+    fun busca() {
+        client.buscaTweets(sucessoParaLista(), erro())
+    }
+
+    fun lista() = lista
+
+    private fun erro() = { erro: Throwable ->
+        excecao.value = erro
+    }
+
+    private fun sucesso() = { tweet: Tweet ->
+        tweetLiveData.value = tweet
+    }
+
+    private fun sucessoParaLista() = { tweets: List<Tweet> ->
+        lista.postValue(tweets)
+    }
 
 }

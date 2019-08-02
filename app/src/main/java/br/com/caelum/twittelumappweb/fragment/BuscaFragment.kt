@@ -42,14 +42,15 @@ class BuscaFragment : Fragment() {
             }
 
             override fun onQueryTextChange(texto: String?): Boolean {
-                val tweets = tweetViewModel.lista()
+                val tweets = tweetViewModel.tweets().value
                 texto?.let {
-                    val filtrados = tweets.filter { tweet ->
+                    val filtrados = tweets?.filter { tweet ->
                         tweet.mensagem.contains(texto, true)
                     }
-                    val adapter = TweetAdapter(filtrados)
-                    lista_tweets.adapter = adapter
-
+                    filtrados?.let {
+                        val adapter = TweetAdapter(filtrados)
+                        lista_tweets.adapter = adapter
+                    }
                 }
                 return true
             }

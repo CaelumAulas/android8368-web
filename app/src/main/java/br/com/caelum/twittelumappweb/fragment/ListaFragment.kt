@@ -1,5 +1,6 @@
 package br.com.caelum.twittelumappweb.fragment
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,11 +21,12 @@ class ListaFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lista, container, false)
 
-        val tweets = tweetViewModel.lista()
+        tweetViewModel.tweets().observe(this, Observer { lista ->
+            lista?.let{ tweets ->
+                view.lista_tweets.adapter = TweetAdapter(tweets)
+            }
+        })
 
-        val tweetAdapter = TweetAdapter(tweets)
-
-        view.lista_tweets.adapter = tweetAdapter
 
         return view
     }
