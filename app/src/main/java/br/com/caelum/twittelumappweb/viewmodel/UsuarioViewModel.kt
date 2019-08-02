@@ -5,10 +5,16 @@ import br.com.caelum.twittelumappweb.data.UsuarioRepository
 import br.com.caelum.twittelumappweb.modelo.Usuario
 
 class UsuarioViewModel(private val repository: UsuarioRepository) : ViewModel() {
+    fun loga(usuario: Usuario) = repository.loga(usuario)
 
-    fun loga(usuario: Usuario) = repository.login(usuario)
+    fun cria(usuario: Usuario) = repository.cria(usuario)
 
-    fun cria(usuario: Usuario) = repository.criarConta(usuario)
+    fun usuarioEstaLogado() = repository.estaLogado
+
+    fun usuarioDaSessao() = repository.usuarioDaSessao
+
+    fun falha() = repository.erro
+
 
 }
 

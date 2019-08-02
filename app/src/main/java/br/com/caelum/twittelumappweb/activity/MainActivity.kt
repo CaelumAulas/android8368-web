@@ -14,9 +14,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        bottomNavigationListener()
+
         bottom_navigation.selectedItemId = R.id.menu_item_lista
 
-        bottomNavigationListener()
     }
 
     private fun bottomNavigationListener() {
