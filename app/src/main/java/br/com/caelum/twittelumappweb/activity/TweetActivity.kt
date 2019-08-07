@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import br.com.caelum.twittelumappweb.GPS
 import br.com.caelum.twittelumappweb.R
 import br.com.caelum.twittelumappweb.decodificaParaBase64
 import br.com.caelum.twittelumappweb.modelo.Tweet
@@ -27,6 +28,7 @@ import java.io.File
 
 
 class TweetActivity : AppCompatActivity() {
+    private lateinit var gps: GPS
 
     private lateinit var viewModel: TweetViewModel
     private var localFoto: String? = null
@@ -52,9 +54,14 @@ class TweetActivity : AppCompatActivity() {
             Toast.makeText(this, "Tweet salvo!", Toast.LENGTH_LONG).show()
         })
 
-
+        gps = GPS(this)
+        gps.fazRequisicao()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        gps.cancela()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -121,7 +128,9 @@ class TweetActivity : AppCompatActivity() {
 
         val dono = usuarioViewModel.usuarioDaSessao().value
 
-        return Tweet(mensagemDoTweet, foto, dono!!)
+        val (latitude, longitude) = gps.getCoordenadas()
+
+        return Tweet(mensagemDoTweet, foto, dono!!, latitude, longitude)
     }
 
 

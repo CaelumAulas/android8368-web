@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import br.com.caelum.twittelumappweb.R
 import br.com.caelum.twittelumappweb.fragment.BuscaFragment
 import br.com.caelum.twittelumappweb.fragment.ListaFragment
+import br.com.caelum.twittelumappweb.fragment.MapaFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.menu_item_busca -> {
                     exibeNaTela(BuscaFragment())
+                    true
+                }
+                R.id.menu_item_mapa -> {
+                    exibeNaTela(MapaFragment())
                     true
                 }
                 else -> false
